@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS CloudFormation SNS topic and SSM parameter sns-with-error"
+Resources:
+  SNSError:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: "sns-with-error"
+  SNSErrorSSMArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /demo/sns/arn/with/error
+      Type: String
+      Value: !Ref SNSError
+  SNSErrorSSMName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /demo/sns/name/with/error
+      Type: String
+      Value: !GetAtt SNSError.TopicName
+  
+Outputs:
+  SNSErrorArn:
+    Value: !Ref SNSError
+    Export:
+      Name: SNSErrorArn
+  
