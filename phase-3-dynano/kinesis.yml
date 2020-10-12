@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS CloudFormation DynamoDB sns-error-handling"
+
+Parameters:    
+  kinesisName:
+    Description: "name of the kinesis used in the demo"
+    Type: String
+    Default: "unicorn-demo-stream"
+Resources:
+  KinesisStreamDemo:
+    Type: AWS::Kinesis::Stream
+    Properties: 
+      Name: !Ref kinesisName
+      ShardCount: 1
+
+Outputs:
+  KinesisStreamDemoArn:
+    Value: !GetAtt KinesisStreamDemo.Arn
+    Export:
+      Name: KinesisStreamDemoArn
+  KinesisStreamDemoName:
+    Value: !Ref kinesisName
+    Export:
+      Name: KinesisStreamDemoName

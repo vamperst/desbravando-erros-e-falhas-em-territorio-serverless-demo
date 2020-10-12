@@ -32,6 +32,7 @@
     ``` shell
     bash sendMessagesNew.sh
     bash sendMessagesOld.sh
+    ```
 
 
 ## Phase 2
@@ -52,7 +53,6 @@
      ``` shell
      sls deploy
      ```
-    ``
 
 ### Error Handling
 
@@ -64,4 +64,27 @@
      ``` shell
      sls deploy
      ```
-    ``
+
+## Phase 3
+
+
+### Deploy Kinesis
+1. Run the command:
+   ``` shell
+   aws cloudformation create-stack --stack-name demo-kinesis-stream --template-body file://kinesis.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
+   ```
+### With Error
+1. Run the command:
+     ``` shell
+     sls deploy
+     ```
+
+### Error Handling
+1. Run the command:
+   ``` shell
+   aws cloudformation create-stack --stack-name phase-3-error-handling --template-body file://dynamo-error-handling-cfn.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
+   ```
+2. Run the command:
+     ``` shell
+     sls deploy
+     ```

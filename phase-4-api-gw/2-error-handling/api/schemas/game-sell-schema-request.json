@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "type": "object",
+    "title": "Schema request game-sell path",
+    "required": [
+        "UserID",
+        "SKU",
+        "PriceID"
+    ],
+    "properties": {
+        "UserID": {
+            "type": "string",
+            "title": "The UserID schema"
+        },
+        "SKU": {
+            "type": "string",
+            "title": "The SKU schema"
+        },
+        "PriceID": {
+            "type": "string",
+            "title": "The PriceID schema"
+        }
+    },
+    "additionalProperties": false
+}

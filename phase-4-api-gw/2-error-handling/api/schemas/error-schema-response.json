@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "type": "object",
+    "title": "The error response schema",
+    "description": "The json schema for the error response.",
+    "properties": {
+        "response": {
+            "type": "string",
+            "title": "The error response schema",
+            "description": "Message of the error."
+        }
+    },
+    "additionalProperties": true
+}
