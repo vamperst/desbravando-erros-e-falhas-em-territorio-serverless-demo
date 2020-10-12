@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS CloudFormation DynamoDB sns-error-handling"
+
+Parameters:    
+  dynamoName:
+    Description: "name of the dynamo table used in the demo"
+    Type: String
+    Default: "unicorn-demo"
+Resources:
+  DynamoDBDemo:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: "PAY_PER_REQUEST"
+      AttributeDefinitions: 
+        - 
+          AttributeName: "PurchaseID"
+          AttributeType: "S"
+        - 
+          AttributeName: "UserID"
+          AttributeType: "S"
+      KeySchema: 
+          - 
+            AttributeName: "PurchaseID"
+            KeyType: "HASH"
+          - 
+            AttributeName: "UserID"
+            KeyType: "RANGE"
+      TableName: !Ref dynamoName
+      StreamSpecification:
+        StreamViewType: "NEW_AND_OLD_IMAGES"
+
+Outputs:
+  DynamoDBDemoArn:
+    Value: !GetAtt DynamoDBDemo.Arn
+    Export:
+      Name: DynamoDBDemoArn
+  DynamoDBDemoStreamArn:
+    Value: !GetAtt DynamoDBDemo.StreamArn
+    Export:
+      Name: DynamoDBDemoStreamArn
+  DynamoDBDemoNames:
+    Value: !Ref dynamoName
+    Export:
+      Name: DynamoDBDemoName

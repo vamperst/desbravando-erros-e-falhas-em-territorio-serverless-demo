@@ -1,0 +1,42 @@
+service: SQS-error-handling
+provider:
+  name: aws
+  runtime: python3.8
+  region: 'us-east-1'
+  memorySize: 128
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'dynamodb:*'
+      Resource:
+        - ${cf:demo-database-dynamo.DynamoDBDemoArn}
+    - Effect: 'Allow'
+      Action:
+        - 'sns:*'
+      Resource:
+        -  ${cf:phase-2-error-handling.SNSAPIArn}
+    - Effect: 'Allow'
+      Action:
+        - 'sqs:*'
+      Resource:
+        -  ${cf:phase-2-error-handling.SQSQueueAPIArn}
+
+functions:
+  game-sell:
+    handler: lambda.handler
+    events:
+      - http:
+          path: /game-sell
+          method: post
+          cors: true
+    environment:
+      snsArn: ${cf:phase-2-error-handling.SNSAPIArn}
+  store-game-sell:
+    handler: lambda.storeGameSell
+    events:
+      - sqs:
+          arn: ${cf:phase-2-error-handling.SQSQueueAPIArn}
+          batchSize: 1
+          enabled: true
+    environment:
+      dynamoTableName: ${cf:demo-database-dynamo.DynamoDBDemoNames}

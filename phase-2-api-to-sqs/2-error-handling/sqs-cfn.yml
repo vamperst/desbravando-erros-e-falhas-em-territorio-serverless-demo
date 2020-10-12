@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS CloudFormation SNS topic and SSM parameter sns-error-handling"
+Resources:
+  SQSQueueAPIDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${AWS::StackName}-sqs-api-DLQ"
+      VisibilityTimeout: 10
+      DelaySeconds: 15
+  SQSQueueAPI:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${AWS::StackName}-sqs-api"
+      VisibilityTimeout: 10
+      DelaySeconds: 15
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt SQSQueueAPIDLQ.Arn
+        maxReceiveCount: 2
+  SNSAPI:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub "${AWS::StackName}-sns-api"
+      Subscription:
+        - Endpoint: !GetAtt 
+            - SQSQueueAPI
+            - Arn
+          Protocol: sqs
+  SQSQueuePolicy:
+    Type: 'AWS::SQS::QueuePolicy'
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Action:
+              - 'SQS:*'
+            Resource: !GetAtt 'SQSQueueAPI.Arn'
+            Condition:
+              ArnEquals:
+                'aws:SourceArn': !Ref SNSAPI
+      Queues:
+        - !Ref SQSQueueAPI
+
+Outputs:
+  SNSAPIArn:
+    Value: !Ref SNSAPI
+    Export:
+      Name: !Sub "${AWS::StackName}-SNSAPIArn"
+  SQSQueueAPIUrl:
+    Value: !Ref SQSQueueAPI
+    Export:
+      Name: !Sub "${AWS::StackName}-SQSQueueAPIUrl"
+  SQSQueueAPIArn:
+    Value: !GetAtt SQSQueueAPI.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-SQSQueueAPIArn"
