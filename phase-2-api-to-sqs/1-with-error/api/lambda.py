@@ -1,7 +1,6 @@
 import boto3
 import json
 from random import randint
-from random import randint
 import random
 import uuid
 import os

@@ -6,7 +6,7 @@
 
 1. Run the command:
    ``` shell
-   aws cloudformation create-stack --stack-name phase-1-sns-with-error --template-body file://sns-cfn.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
+   aws cloudformation create-stack --stack-name phase-1-with-error --template-body file://sns-cfn.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
    ```
 2. Run the command:
      ``` shell
@@ -22,7 +22,7 @@
 
 1. Run the command:
    ``` shell
-   aws cloudformation create-stack --stack-name phase-1-sns-error-handling --template-body file://sns-cfn.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
+   aws cloudformation create-stack --stack-name phase-1-error-handling --template-body file://sns-cfn.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
    ```
 2. Run the command:
      ``` shell

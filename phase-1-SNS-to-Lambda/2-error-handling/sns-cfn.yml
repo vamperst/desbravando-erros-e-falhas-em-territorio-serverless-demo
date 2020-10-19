@@ -4,7 +4,7 @@ Resources:
   SNSError:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: "sns-error-handling"
+      TopicName: !Sub "${AWS::StackName}-sns"
   SNSErrorSSMArn:
     Type: AWS::SSM::Parameter
     Properties:
@@ -35,7 +35,7 @@ Resources:
   SQSQueueDLQ:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: "dlq-sns"
+      QueueName: !Sub "${AWS::StackName}-dlq-sns"
   SQSQueueDLQPolicy:
     Type: 'AWS::SQS::QueuePolicy'
     Properties:
@@ -78,17 +78,17 @@ Outputs:
   SNSErrorHandlingArn:
     Value: !Ref SNSError
     Export:
-      Name: SNSErrorHandlingArn
+      Name: !Sub "${AWS::StackName}-SNSErrorHandlingArn"
   SNSDLQHandlingArn:
     Value: !Ref SNSDLQ
     Export:
-      Name: SNSDLQHandlingArn
+      Name: !Sub "${AWS::StackName}-SNSDLQHandlingArn"
   SQSQueueDLQSSMURLOutput:
     Value: !Ref SQSQueueDLQ
     Export:
-      Name: SQSQueueDLQSSMURLOutput
+      Name: !Sub "${AWS::StackName}-SQSQueueDLQSSMURLOutput"
   SQSQueueDLQSSMArnOutput:
     Value: !GetAtt SQSQueueDLQ.Arn
     Export:
-      Name: SQSQueueDLQSSMArnOutput
+      Name: !Sub "${AWS::StackName}-SQSQueueDLQSSMArnOutput"
   

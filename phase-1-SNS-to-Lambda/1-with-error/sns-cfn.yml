@@ -4,7 +4,7 @@ Resources:
   SNSError:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: "sns-with-error"
+      TopicName: !Sub "${AWS::StackName}-sns"
   SNSErrorSSMArn:
     Type: AWS::SSM::Parameter
     Properties:
@@ -22,5 +22,5 @@ Outputs:
   SNSErrorArn:
     Value: !Ref SNSError
     Export:
-      Name: SNSErrorArn
+      Name: !Sub "${AWS::StackName}-SNSErrorArn"
   

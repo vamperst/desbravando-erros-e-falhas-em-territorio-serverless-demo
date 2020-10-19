@@ -3,6 +3,7 @@ import json
 import uuid
 import os
 from kinesis import KinesisHandler
+import random
 
 kinesis = KinesisHandler(os.environ["kinesisName"])
 
@@ -10,6 +11,10 @@ kinesis = KinesisHandler(os.environ["kinesisName"])
 
 def handler(event, context):
     print(f"event: %s" % json.dumps(event))
+
+    if(bool(random.getrandbits(1))):
+            print("Error!!!")
+            raise Exception("Random Error generated")
     
     for record in event["Records"]:
 

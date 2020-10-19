@@ -9,21 +9,19 @@ provider:
       Action:
         - 'sqs:*'
       Resource:
-        - ${cf:phase-1-sns-error-handling.SQSQueueDLQSSMArnOutput}
+        - ${cf:phase-1-error-handling.SQSQueueDLQSSMArnOutput}
     - Effect: 'Allow'
       Action:
         - 'sns:*'
       Resource:
-        - ${cf:phase-1-sns-error-handling.SNSErrorHandlingArn}
+        - ${cf:phase-1-error-handling.SNSErrorHandlingArn}
 
 functions:
   receive-message:
-    name: receive-message
     handler: lambda.handler
     events:
       - sns:
-          arn: ${cf:phase-1-sns-error-handling.SNSErrorHandlingArn}
-    onError: ${cf:phase-1-sns-error-handling.SNSDLQHandlingArn}
+          arn: ${cf:phase-1-error-handling.SNSErrorHandlingArn}
     maximumRetryAttempts: 0
     destinations:
-      onFailure: ${cf:phase-1-sns-error-handling.SNSDLQHandlingArn}
+      onFailure: ${cf:phase-1-error-handling.SNSDLQHandlingArn}

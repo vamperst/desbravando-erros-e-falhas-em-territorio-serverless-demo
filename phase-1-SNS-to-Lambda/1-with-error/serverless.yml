@@ -11,4 +11,4 @@ functions:
     handler: lambda.handler
     events:
       - sns: 
-          arn: ${cf:phase-1-sns-with-error.SNSErrorArn}
+          arn: ${cf:phase-1-with-error.SNSErrorArn}
