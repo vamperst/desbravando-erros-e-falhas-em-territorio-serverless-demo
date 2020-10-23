@@ -10,5 +10,5 @@
             "description": "Message of the error."
         }
     },
-    "additionalProperties": true
+    "additionalProperties": false
 }
