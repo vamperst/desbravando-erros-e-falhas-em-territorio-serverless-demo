@@ -1,4 +1,4 @@
-service: sns-with-error
+service: phase-1-with-error-functions
 provider:
   name: aws
   runtime: python3.8

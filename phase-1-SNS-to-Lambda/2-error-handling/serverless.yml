@@ -1,4 +1,4 @@
-service: sns-error-handling
+service: phase-1-error-handling-functions
 provider:
   name: aws
   runtime: python3.8
@@ -23,5 +23,4 @@ functions:
       - sns:
           arn: ${cf:phase-1-error-handling.SNSErrorHandlingArn}
     maximumRetryAttempts: 0
-    destinations:
-      onFailure: ${cf:phase-1-error-handling.SNSDLQHandlingArn}
+    onError: ${cf:phase-1-error-handling.SNSDLQHandlingArn}

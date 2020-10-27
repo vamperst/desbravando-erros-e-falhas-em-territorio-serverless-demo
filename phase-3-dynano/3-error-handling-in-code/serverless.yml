@@ -1,4 +1,4 @@
-service: dynamo-error-handling-in-code
+service: phase-3-error-handling-code-functions
 provider:
   name: aws
   runtime: python3.8

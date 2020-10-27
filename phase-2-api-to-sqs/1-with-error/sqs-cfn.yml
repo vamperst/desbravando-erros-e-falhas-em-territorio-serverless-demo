@@ -6,7 +6,6 @@ Resources:
     Properties:
       QueueName: !Sub "${AWS::StackName}-sqs-api"
       VisibilityTimeout: 10
-      DelaySeconds: 15
   SNSAPI:
     Type: AWS::SNS::Topic
     Properties:

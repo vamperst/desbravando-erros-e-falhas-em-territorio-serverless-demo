@@ -1,4 +1,4 @@
-service: SQS-error-handling
+service: phase-2-error-handling-functions
 provider:
   name: aws
   runtime: python3.8

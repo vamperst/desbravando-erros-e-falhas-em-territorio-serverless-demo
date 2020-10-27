@@ -90,10 +90,6 @@
      ```
 ### Error Handling with code
 1. Run the command:
-   ``` shell
-   aws cloudformation create-stack --stack-name phase-3-error-handling --template-body file://dynamo-error-handling-cfn.yml --capabilities CAPABILITY_NAMED_IAM --region=us-east-1
-   ```
-2. Run the command:
      ``` shell
      sls deploy
      ```
@@ -106,3 +102,7 @@
      ``` shell
      sls deploy
      ```
+
+```
+{"message":$context.error.messageString,"requiredFields":["PurchaseID","Status","UserID"]}
+```
