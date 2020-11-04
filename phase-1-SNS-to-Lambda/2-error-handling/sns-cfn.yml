@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "AWS CloudFormation SNS topic and SSM parameter sns-error-handling"
 Resources:
+
   SNSError:
     Type: AWS::SNS::Topic
     Properties:
@@ -11,12 +12,8 @@ Resources:
       Name: /demo/sns/arn/error/handling
       Type: String
       Value: !Ref SNSError
-  SNSErrorSSMName:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /demo/sns/name/error/handling
-      Type: String
-      Value: !GetAtt SNSError.TopicName
+
+
   SNSDLQ:
     Type: AWS::SNS::Topic
     Properties:
@@ -26,12 +23,6 @@ Resources:
             - SQSQueueDLQ
             - Arn
           Protocol: sqs
-  SNSDLQSSMArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /demo/sns/dlq/arn/error/handling
-      Type: String
-      Value: !Ref SNSDLQ
   SQSQueueDLQ:
     Type: AWS::SQS::Queue
     Properties:
@@ -61,18 +52,6 @@ Resources:
                 'aws:SourceArn': !Ref SNSError
       Queues:
         - !Ref SQSQueueDLQ
-  SQSQueueDLQSSMURL:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /demo/sqs/url/sns/dlq
-      Type: String
-      Value: !Ref SQSQueueDLQ
-  SQSQueueDLQSSMArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /demo/sqs/arn/sns/dlq
-      Type: String
-      Value: !GetAtt SQSQueueDLQ.Arn
   
 Outputs:
   SNSErrorHandlingArn:

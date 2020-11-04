@@ -1,4 +1,4 @@
-service: api-gw-error-handling
+service: phase-4-error-handling
 plugins:
   - serverless-aws-documentation
 provider:
